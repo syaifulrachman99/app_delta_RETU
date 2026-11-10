@@ -137,12 +137,10 @@ if st.sidebar.button("🚀 Proses Laporan Sekarang", type="primary"):
                 selisih = (tanggal_h - tanggal).days
                 return "H" if selisih == 0 else f"H-{selisih}"
 
-            def buat_mendatar(df, kolom_kunci, kolom_nilai, tanggal_h=None):
+            def buat_mendatar(df, kolom_kunci, kolom_nilai, tanggal_h):
                 if df.empty:
                     return pd.DataFrame(), kolom_kunci, kolom_nilai, [], []
-                if tanggal_h is None:
-                    tanggal_h = df["date"].max()
-
+                
                 df = df[df["date"] <= tanggal_h].copy()
                 df["hari"] = df["date"].apply(lambda t: label_h(t, tanggal_h))
                 tanggal_urut = sorted(df["date"].unique())
@@ -223,6 +221,9 @@ if st.sidebar.button("🚀 Proses Laporan Sekarang", type="primary"):
                     maks = max(len(str(ws.cell(row=r, column=i).value or "")) for r in range(3, min(ws.max_row, 60) + 1))
                     ws.column_dimensions[huruf].width = min(max(10, maks + 2), 60) if i <= n_kunci else 11
 
+            # Menggunakan tanggal aktual hari ini (Today Actual) untuk semua sheet
+            tanggal_h_aktual = pd.to_datetime(datetime.date.today())
+
             specs = [
                 ("retu", out_retu, ["site_id", "distname", "sector_id", "retu"], ["angle", "delta"])
             ]
@@ -235,8 +236,7 @@ if st.sidebar.button("🚀 Proses Laporan Sekarang", type="primary"):
                         specs.append((nama_sheet, df_param, ["site_id", "distname", "lncel"], ["nilai", "delta"]))
             
             for nama, df, kunci, nilai in specs:
-                th = df["date"].max() if not df.empty else None
-                hasil = buat_mendatar(df, kunci, nilai, th)
+                hasil = buat_mendatar(df, kunci, nilai, tanggal_h_aktual)
                 ws = wb.create_sheet(nama)
                 if not df.empty:
                     tulis_sheet(ws, *hasil)
