@@ -13,9 +13,25 @@ st.set_page_config(
     layout="wide"
 )
 
+# --- KODE CSS UNTUK MENGUBAH BACKGROUND MENJADI SOFT PINK ---
+st.markdown("""
+    <style>
+    /* Mengubah warna background halaman utama menjadi soft pink */
+    .stApp {
+        background-color: #FFF0F3; 
+    }
+    
+    /* Mengubah warna background sidebar menjadi soft pink yang sedikit lebih gelap agar kontras */
+    [data-testid="stSidebar"] {
+        background-color: #FFE0E6; 
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 st.title("📊 Aplikasi Penghitung Delta Parameter RETU & CONCHEK")
 st.markdown("Unggah file CSV Anda di sidebar sebelah kiri, lalu klik tombol **Proses Laporan Sekarang**.")
 
+# (Lanjutkan sisa kode script aplikasi Anda di bawahnya seperti biasa...)
 # Sidebar untuk upload file
 st.sidebar.header("📁 Unggah Berkas Data")
 uploaded_retu = st.sidebar.file_uploader("Upload file `retu.csv`", type=["csv"])
