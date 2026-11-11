@@ -270,16 +270,16 @@ if st.sidebar.button("🚀 Proses Laporan Sekarang", type="primary"):
                 for site in sorted(site_tanpa_retu):
                     ws_missing.append([site])
 
-            output_path = "hasil_delta.xlsx"
+            output_path = "Hasil_ChonCheck.xlsx"
             wb.save(output_path)
             
             st.success("✅ Proses Berhasil! Laporan Excel Anda sudah siap.")
             
             with open(output_path, "rb") as f:
                 st.download_button(
-                    label="📥 Unduh File Excel (hasil_delta.xlsx)",
+                    label="📥 Unduh File Excel (Hasil_ChonCheck.xlsx)",
                     data=f,
-                    file_name="hasil_delta.xlsx",
+                    file_name="Hasil_ChonCheck.xlsx",
                     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                 )
     else:
